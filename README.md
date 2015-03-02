@@ -7,5 +7,5 @@ For this to work you to have access using the current computers SSH key, then yo
 
 ## USAGE
 
-export TOKEN="YOURAPITOKEN"
-./update_droplet_keys.sh
+    export TOKEN="YOURAPITOKEN"
+    ./update_droplet_keys.sh
