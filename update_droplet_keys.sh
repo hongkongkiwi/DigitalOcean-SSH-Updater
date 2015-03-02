@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # UNCOMMENT THIS TO SET YOUR TOKEN IN THE SCRIPT - NOT RECOMMENDED
-TOKEN=""
+#TOKEN="YOURTOKEN"
 
+# Check if the Token is set
 if [[ "$TOKEN" == "" ]]; then
    echo "You must set your api token using the following in bash"
    echo "export TOKEN=\"YOURTOKEN\""
@@ -18,6 +19,13 @@ HEADERS="Authorization: Bearer $TOKEN"
 JSON="./JSON.sh/JSON.sh -p -b"
 URL="https://api.digitalocean.com/v2"
 TEMP_FILE=`mktemp -t "$0"`
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Check if our dependencies are installed
+command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
+command -v egrep >/dev/null 2>&1 || { echo >&2 "This script requires egrep but it's not installed.  Aborting."; exit 1; }
+command -v mktemp >/dev/null 2>&1 || { echo >&2 "This script requires mktemp but it's not installed.  Aborting."; exit 1; }
+[[ -f "$DIR/JSON.sh/JSON.sh" ]] || { echo >&2 "This script requires JSON.sh as a submodule but it's not available, try recloning the repository.  Aborting."; exit 1; }
 
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c INT
